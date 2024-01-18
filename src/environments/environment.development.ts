@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-      baseUrl: "https://courtapi.azurewebsites.net",
+      baseUrl: "http://localhost:8081",
     //  baseUrl: "https://courtapptest.azurewebsites.net",
     //  test
 };

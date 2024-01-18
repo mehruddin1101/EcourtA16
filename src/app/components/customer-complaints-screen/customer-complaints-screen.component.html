@@ -67,38 +67,40 @@
                 </th>
             </tr>
         </ng-template>
+
         <ng-template pTemplate="body" let-complains let-i="rowIndex">
             <tr class="p-selectable-row">
-                <td>
-                    <p-tableCheckbox [value]="complains"></p-tableCheckbox>
-                </td>
-                <td>
-                    <span class="p-column-title">No</span>
-                    {{ i + 1 }}
-                </td>
-                <td>
-                    <span class="p-column-title">Complain Number</span>
-                    {{ complains.complainNumber }}
-                </td>
-                <td>
-                    <span class="p-column-title">Complain Topic</span>
-                    {{ complains.topics }}
-                </td>
-                <td>
-                    <span class="p-column-title">Message</span>
-                    {{ complains.message }}
-                </td>
-                <td>
-                    <span class="p-column-title">Complain Date</span>
-                    {{ complains.date | date : "MM/dd/yyyy" }}
-                </td>
-                <td>
-                    <span class="p-column-title">Status</span>
-                    {{"status"}}
-
-                </td>
+              <td>
+                <p-tableCheckbox [value]="complains"></p-tableCheckbox>
+              </td>
+              <td>
+                <span class="p-column-title">No</span>
+                {{ i + 1 }}
+              </td>
+              <td>
+                <span class="p-column-title">Complaint Number</span>
+                {{ complains.id }}
+              </td>
+              <td>
+                <span class="p-column-title">Complaint Topic</span>
+                {{ complains.topics }}
+              </td>
+              <td>
+                <span class="p-column-title">Message</span>
+                {{ complains.message }}
+              </td>
+              <td>
+                <span class="p-column-title">Complaint Date</span>
+                {{ complains.createdAt | date : "MM/dd/yyyy" }}
+              </td>
+              <td>
+                <span class="p-column-title">Status</span>
+                {{ complains.status }}
+              </td>
             </tr>
-        </ng-template>
+          </ng-template>
+          
+
         <ng-template pTemplate="emptymessage">
             <tr>
                 <td colspan="8">No complains found.</td>

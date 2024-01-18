@@ -36,4 +36,18 @@ export class CommonService {
     return this.http.get(API_URL).pipe(catchError(this.error));
   }
 
+  addComplain(data: any): Observable<any> {
+    const API_URL = `${this.baseUrl}/api/complain/saveComplain`;
+    return this.http.post(API_URL, data).pipe(catchError(this.error));
+  }
+  getComplain(id:any): Observable<any> {
+    const API_URL = `${this.baseUrl}/api/complain/${id}`;
+    return this.http.get(API_URL).pipe(catchError(this.error));
+  }
+
+  getComplainAllComplains(): Observable<any> {
+    const API_URL = `${this.baseUrl}/api/complain/all`;
+    return this.http.get(API_URL).pipe(catchError(this.error));
+  }
+
 }

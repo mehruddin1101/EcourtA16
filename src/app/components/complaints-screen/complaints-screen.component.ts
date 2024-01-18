@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { OverlayPanel } from 'primeng/overlaypanel';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonService } from 'src/services/common.service';
 @Component({
   selector: 'app-complaints-screen',
   templateUrl: './complaints-screen.component.html',
@@ -24,7 +25,7 @@ export class ComplaintsScreenComponent {
   statusOptions: any[];
   selectedStatus: any;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private commonService:CommonService) {
     this.statusOptions = [
       { label: 'Pending', value: 'Pending' },
       { label: 'Received', value: 'Received' },
@@ -34,6 +35,7 @@ export class ComplaintsScreenComponent {
     ];
   }
   ngOnInit() {
+    this.getAllComplains();
     this.complains = [
       {
         id: 1,
@@ -95,5 +97,10 @@ export class ComplaintsScreenComponent {
       (complain) => (complain.date = new Date(<Date>complain.date))
     );
 
+  }
+  getAllComplains(){
+    this.commonService.getComplainAllComplains().subscribe((res)=>{
+      console.log(res);
+    })
   }
 }
