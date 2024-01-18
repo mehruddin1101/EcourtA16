@@ -1,0 +1,47 @@
+# Node.js dependencies
+node_modules/
+
+# Angular specific
+.angular
+
+# Compiled output
+dist/
+
+# TypeScript build
+*.tsbuildinfo
+
+# Angular service worker
+ngsw.json
+
+# Angular CLI configuration
+.angular-cli.json
+.angular-cli.js
+.angular-config.json
+
+# Angular testing
+karma.conf.js
+karma.conf.ts
+test.ts
+*.spec.ts
+
+# Protractor config
+protractor.conf.js
+protractor.conf.ts
+
+# Temporary and cache files
+.temp/
+.cache/
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Compiled output of TypeScript (if using ts-node)
+tsconfig.tsbuildinfo
+
+# Yarn integrity file
+.yarn-integrity

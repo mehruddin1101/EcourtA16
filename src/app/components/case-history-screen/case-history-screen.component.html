@@ -1,0 +1,166 @@
+<div class="card m-3 mt-5">
+    <p-table #dt [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm" [value]="cases"
+        [(selection)]="selectedCases" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="[
+      'cnrNumber',
+      'caseNumber',
+      'partyName',
+      'validateAndApprove'
+    ]">
+        <ng-template pTemplate="caption">
+            <div class="table-header d-flex align-items-center flex-wrap">
+                <span class="me-2"> Case History</span>
+                <span class="p-input-icon-left me-2">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Enter CNR" class="p-inputtext" />
+                </span>
+                <p-button label="Search" class="me-2" icon="pi pi-search" styleClass="w-8rem mx-auto me-2"
+                    type="button"></p-button>
+                <p-button *ngIf="selectedCases.length > 0" label="Send WhatsApp" class="me-2" icon="pi pi-whatsapp"
+                    styleClass="w-12rem mx-auto me-2" type="button" (click)="sendWhatsAppMessage()"></p-button>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 4rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="cnrNumber" style="min-width: 3rem">
+                    <div class="flex justify-content-between align-items-center">
+                        No
+                        <p-sortIcon field="cnrNumber"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="cnrNumber" style="min-width: 11rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Cnr Number
+                        <p-sortIcon field="cnrNumber"></p-sortIcon>
+                        <p-columnFilter type="text" field="cnrNumber" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="caseNumber" style="min-width: 9rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Case Number
+                        <p-sortIcon field="caseNumber"></p-sortIcon>
+                        <!-- Add filter for caseNumber if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="caseNumber" style="min-width: 9rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Case Staus
+                        <p-sortIcon field="caseNumber"></p-sortIcon>
+                        <!-- Add filter for caseNumber if needed -->
+                    </div>
+                </th>
+
+                <th pSortableColumn="date" style="min-width: 9rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Previous Date
+                        <p-sortIcon field="date"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="date" style="min-width: 8rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Next Date
+                        <p-sortIcon field="date"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="partyName" style="min-width: 8rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Status
+                        <p-sortIcon field="partyName"></p-sortIcon>
+                        <!-- Add filter for partyName if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="partyName" style="min-width: 10rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Complaint name
+                        <p-sortIcon field="partyName"></p-sortIcon>
+                        <!-- Add filter for partyName if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="partyName" style="min-width: 11rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Respondant Name
+                        <p-sortIcon field="partyName"></p-sortIcon>
+                        <!-- Add filter for partyName if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="partyName" style="min-width: 12rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Purpose Of Hearing
+                        <p-sortIcon field="partyName"></p-sortIcon>
+                        <!-- Add filter for partyName if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="partyName" style="min-width: 8rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Business
+                        <p-sortIcon field="partyName"></p-sortIcon>
+                        <!-- Add filter for partyName if needed -->
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-cases let-i="rowIndex">
+            <tr class="p-selectable-row">
+                <td>
+                    <p-tableCheckbox [value]="cases"></p-tableCheckbox>
+                </td>
+                <td>
+                    <span class="p-column-title">No</span>
+                    {{ i + 1 }}
+                </td>
+                <td>
+                    <span class="p-column-title">Cnr Number</span>
+                    {{ cases.cnrNumber }}
+                </td>
+                <td>
+                    <span class="p-column-title">Case Number</span>
+                    {{ cases.caseNumber }}
+                </td>
+                <td>
+                    <span class="p-column-title">Case Status</span>
+                    {{ cases.caseStatus }}
+                </td>
+                <td>
+                    <span class="p-column-title">Previous Date</span>
+                    {{ cases.previousDate | date: "MM/dd/yyyy" }}
+                </td>
+                <td>
+                    <span class="p-column-title">Next Date</span>
+                    {{ cases.nextDate | date: "MM/dd/yyyy" }}
+                </td>
+                <td>
+                    <span class="p-column-title">Status</span>
+                    {{ cases.status }}
+                </td>
+                <td>
+                    <span class="p-column-title">Complaint Name</span>
+                    {{ cases.complaintName }}
+                </td>
+                <td>
+                    <span class="p-column-title">Respondent Name</span>
+                    {{ cases.respondentName }}
+                </td>
+                <td>
+                    <span class="p-column-title">Purpose Of Hearing</span>
+                    {{ cases.purposeOfHearing }}
+                </td>
+                <td>
+                    <span class="p-column-title">Business</span>
+                    {{ cases.business }}
+                </td>
+            </tr>
+
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No cases found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

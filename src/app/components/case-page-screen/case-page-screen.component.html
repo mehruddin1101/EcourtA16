@@ -1,0 +1,250 @@
+<div class="card m-3 mt-5">
+    <p-overlayPanel class="add-class" #addCasePanel [dismissable]="false">
+        <div class="p-fluid">
+          <form [formGroup]="addCaseForm" (ngSubmit)="submitAddCaseForm()">
+            <div class="p-field">
+              <label for="country">Country</label>
+              <p-dropdown
+                formControlName="country"
+                [options]="countryOptions"
+                placeholder="Select Country"
+              ></p-dropdown>
+            </div>
+      
+            <div class="p-field">
+              <label for="state">State</label>
+              <p-dropdown
+                formControlName="state"
+                [options]="stateOptions"
+                placeholder="Select State"
+              ></p-dropdown>
+            </div>
+      
+            <div class="p-field">
+              <label for="district">District</label>
+              <p-dropdown
+                formControlName="district"
+                [options]="districtOptions"
+                placeholder="Select District"
+              ></p-dropdown>
+            </div>
+      
+            <div class="p-field">
+              <label for="courtComplex">Court Complex</label>
+              <input
+                type="text"
+                formControlName="courtComplex"
+                placeholder="Enter Court Complex"
+                class="p-inputtext"
+              />
+            </div>
+      
+            <div class="p-field">
+              <label for="caseNumber">Case Number</label>
+              <input
+                type="text"
+                formControlName="caseNumber"
+                placeholder="Enter Case Number"
+                class="p-inputtext"
+              />
+            </div>
+      
+            <div class="p-field">
+              <label for="cnrNumber">CNR Number</label>
+              <input
+                type="number"
+                formControlName="cnrNumber"
+                placeholder="Enter CNR Number"
+                class="p-inputtext"
+              />
+            </div>
+      
+            <div class="p-field">
+              <label for="caseDate">Case Date</label>
+              <p-calendar
+                formControlName="caseDate"
+                placeholder="Select Case Date"
+                [showIcon]=true
+              ></p-calendar>
+            </div>
+      
+            <div class="p-field">
+              <label for="caseType">Case Type</label>
+              <p-dropdown
+                formControlName="caseType"
+                [options]="caseTypeOptions"
+                placeholder="Select Case Type"
+              ></p-dropdown>
+            </div>
+      
+            <div class="p-mt-2">
+              <button pButton type="submit" label="Submit" class="p-button-success"></button>
+              <button pButton type="button" label="Cancel" class="p-button-secondary" (click)="addCasePanel.hide()"></button>
+            </div>
+          </form>
+        </div>
+      </p-overlayPanel>
+      
+  <p-table
+    #dt
+    [tableStyle]="{ 'min-width': '50rem' }"
+    styleClass="p-datatable-sm"
+    [value]="customers"
+    [(selection)]="selectedCustomers"
+    dataKey="id"
+    [rowHover]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [loading]="loading"
+    [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [filterDelay]="0"
+    [globalFilterFields]="[
+      'cnrNumber',
+      'caseNumber',
+      'partyName',
+      'validateAndApprove'
+    ]"
+  >
+    <ng-template pTemplate="caption">
+      <div class="table-header d-flex align-items-center flex-wrap">
+       <span class="me-2"> Case Page</span>
+        <span class="p-input-icon-left me-2">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            placeholder="Global Search"
+            class="p-inputtext"
+          />
+        </span>
+        <p-button
+          label="Add Case"
+          class="me-2"
+          icon="pi pi-plus"
+          styleClass="w-8rem mx-auto me-2"
+          type="button"
+          (click)="showAddCasePanel($event)"
+        ></p-button>
+        <p-button
+          label="Delete Multiple"
+          class="me-2"
+          icon="pi pi-trash"
+          styleClass="w-12rem mx-auto me-2"
+          type="button"
+        ></p-button>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 4rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="cnrNumber" style="min-width: 3rem">
+          <div class="flex justify-content-between align-items-center">
+            No
+            <p-sortIcon field="cnrNumber"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="cnrNumber" style="min-width: 8rem">
+          <div class="flex justify-content-between align-items-center">
+            Cnr Number
+            <p-sortIcon field="cnrNumber"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="cnrNumber"
+              display="menu"
+              class="ml-auto"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th pSortableColumn="caseNumber" style="min-width: 8rem">
+          <div class="flex justify-content-between align-items-center">
+            Case Number
+            <p-sortIcon field="caseNumber"></p-sortIcon>
+            <!-- Add filter for caseNumber if needed -->
+          </div>
+        </th>
+        <th pSortableColumn="partyName" style="min-width: 8rem">
+          <div class="flex justify-content-between align-items-center">
+            Party Name
+            <p-sortIcon field="partyName"></p-sortIcon>
+            <!-- Add filter for partyName if needed -->
+          </div>
+        </th>
+        <th pSortableColumn="date" style="min-width: 8rem">
+          <div class="flex justify-content-between align-items-center">
+            Next Date
+            <p-sortIcon field="date"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="validateAndApprove" style="min-width: 8rem">
+          <div class="flex justify-content-between align-items-center">
+            Validate and Approve
+            <!-- Add filter for validateAndApprove if needed -->
+          </div>
+        </th>
+        <th pSortableColumn="tools" style="min-width: 10rem">
+          <div class="flex justify-content-center align-items-center">
+            Tools
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer let-i="rowIndex">
+      <tr class="p-selectable-row">
+        <td>
+          <p-tableCheckbox [value]="customer"></p-tableCheckbox>
+        </td>
+        <td>
+          <span class="p-column-title">No</span>
+          {{ i + 1 }}
+        </td>
+        <td>
+          <span class="p-column-title">Cnr Number</span>
+          {{ customer.cnrNumber }}
+        </td>
+        <td>
+          <span class="p-column-title">Case Number</span>
+          {{ customer.caseNumber }}
+        </td>
+        <td>
+          <span class="p-column-title">Party Name</span>
+          {{ customer.partyName }}
+        </td>
+        <td>
+          <span class="p-column-title">Next Date</span>
+          {{ customer.nextDate | date : "MM/dd/yyyy" }}
+        </td>
+        <td>
+          <span class="p-column-title">Validate and Approve</span>
+          <p-tag
+            [value]="customer.validateAndApprove"
+            [severity]="getSeverity(customer.validateAndApprove)"
+          ></p-tag>
+        </td>
+        <td style="text-align: center">
+          <button
+            pButton
+            type="button"
+            class="p-button-secondary"
+            icon="pi pi-pencil"
+          ></button>
+          <button
+          pButton
+          type="button"
+          class="p-button-secondary ms-2"
+          icon="pi pi-trash"
+        ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8">No cases found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
