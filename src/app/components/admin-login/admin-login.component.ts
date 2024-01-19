@@ -36,7 +36,6 @@ export class AdminLoginComponent implements OnInit {
       password: ['', Validators.required]
     });
   }
-
   onSubmit() {
     this.submitted = true;
     if (this.loginForm.valid) {
