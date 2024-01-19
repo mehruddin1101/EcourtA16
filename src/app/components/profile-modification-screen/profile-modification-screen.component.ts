@@ -63,14 +63,16 @@ export class ProfileModificationScreenComponent implements OnInit {
       district: [null, Validators.required],
       city: [null, Validators.required],
       address: ["", Validators.required],
-      email: ["", [Validators.required, Validators.email]],
+      email: [
+      
+       [Validators.required, Validators.email]],
       mobileNumber: [
         { value: "", disabled: true },
         [Validators.required, Validators.pattern(/^[0-9]{10}$/)],
       ],
       category: [null, Validators.required],
       profession: ["", Validators.required],
-      password:[""]
+      
     });
 
     let userData = localStorage.getItem("user");

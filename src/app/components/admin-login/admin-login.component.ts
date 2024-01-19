@@ -1,11 +1,11 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { AuthService } from '../../../services/auth.service';
 import { CommonService } from '../../../services/common.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { JwtService } from '../../../services/jwt.service';
+
 
 @Component({
   selector: 'app-admin-login',
@@ -14,9 +14,7 @@ import { JwtService } from '../../../services/jwt.service';
 })
 
 
-
 export class AdminLoginComponent implements OnInit {
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -44,16 +42,13 @@ export class AdminLoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.authService.adminLogin(this.loginForm.value).subscribe((res)=>{
         if (res.token){
-
-          console.log("respinbse",res)
+          console.log("response",res)
           this.token.setToken(res.token)
           this.router.navigate(['/case-history'], { replaceUrl: true });
           console.log('Form submitted successfully!');
         }
-        
       })
       // window.location.reload()
-
     }
   }
 }
