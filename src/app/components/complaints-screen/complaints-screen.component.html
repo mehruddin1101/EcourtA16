@@ -1,6 +1,5 @@
 <div class="card">
-    <p-table #dt [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm" [value]="complains"
-        [(selection)]="selectedCustomers" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+      <p-table #dt [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm" [value]="complains"
         [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading" [paginator]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
         [globalFilterFields]="[
@@ -114,11 +113,15 @@
                 </td>
                 <td>
                     <span class="p-column-title">Status</span>
-                    <p-dropdown id="status" [options]="statusOptions" [(ngModel)]="selectedStatus"
-                        placeholder="Select a status"></p-dropdown>
+                    <p-dropdown id="status" [options]="statusOptions"  onchange="up" [(ngModel)]="complains.status"
+                                placeholder="Select a status"  (onChange)="onStatusChange(complains) "></p-dropdown>
+                  </td>
+                  <div style="margin-top: 100px;">
 
-                </td>
+                  </div>
+                  
             </tr>
+           
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>

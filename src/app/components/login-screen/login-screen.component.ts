@@ -45,9 +45,12 @@ export class LoginScreenComponent implements OnInit {
 
       this.authService.login(username, password).subscribe(
         (response) => {
+          console.log(response)
          
           const token = response.token;
           localStorage.setItem('token', token);
+          localStorage.setItem("user", JSON.stringify(response.user))
+
           
           this.toast.success("Login successful!");
           this.router.navigate(["/case-page"])

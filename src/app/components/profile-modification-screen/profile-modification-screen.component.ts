@@ -17,7 +17,7 @@ export class ProfileModificationScreenComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private commonService: CommonService,
-    private authService: AuthService,
+   
     private formBuilder: FormBuilder,
     private toast: ToastrService,
     private token: JwtService,
@@ -28,6 +28,7 @@ export class ProfileModificationScreenComponent implements OnInit {
   registerFormStep3: any;
   submitted = false;
   categoryOptions: any[] | undefined;
+
   stateOptions = [
     { label: "Select State", value: null },
     { label: "State 1", value: "state1" },
@@ -50,17 +51,12 @@ export class ProfileModificationScreenComponent implements OnInit {
     { label: "City 2A", value: "city2A" },
     { label: "City 2B", value: "city2B" },
   ];
-
   currentStep = 0;
-
-  steps = [
-    { label: "Personal Details", command: () => this.onStepChange(0) },
-    { label: "Verification", command: () => this.onStepChange(1) },
-    { label: "Create Credentials", command: () => this.onStepChange(2) },
-  ];
+  users: any;
 
   ngOnInit() {
     this.registerFormStep1 = this.formBuilder.group({
+      id:"",
       firstName: ["", Validators.required],
       lastName: ["", Validators.required],
       state: [null, Validators.required],
@@ -69,53 +65,57 @@ export class ProfileModificationScreenComponent implements OnInit {
       address: ["", Validators.required],
       email: ["", [Validators.required, Validators.email]],
       mobileNumber: [
-        "",
+        { value: "", disabled: true },
         [Validators.required, Validators.pattern(/^[0-9]{10}$/)],
       ],
       category: [null, Validators.required],
       profession: ["", Validators.required],
+      password:[""]
     });
 
-    this.registerFormStep2 = this.formBuilder.group({
-      otp: ["", Validators.required],
-    });
-
-    this.registerFormStep3 = this.formBuilder.group({
-      username: ["", Validators.required],
-      password: ["", Validators.required],
-    });
+    let userData = localStorage.getItem("user");
+    if (userData) {
+      this.users = JSON.parse(userData);
+      this.registerFormStep1.patchValue(this.users);
+    }
 
     this.categoryOptions = [
       { label: "Select Category", value: null },
       { label: "Advocate", value: "ADVOCATE" },
       { label: "User", value: "USER" },
       { label: "Office Professional", value: "OFFICE" },
-      // Add more options as needed
+     
     ];
-  }
-
-  onStepChange(step: any) {
-    this.currentStep = step;
   }
 
   onSubmitStep1() {
     this.submitted = true;
     try {
-      if (this.registerFormStep1.valid) {
-        this.authService
-          .registration(this.registerFormStep1.value)
+      
+        const userId = this.registerFormStep1.get("id").value;
+        console.log(userId)
+        this.commonService
+          .updateProfile(userId, this.registerFormStep1.value)
           .subscribe((e: any) => {
-            if (e.statusCode === 200) {
+            if (e.status === 200) {
               this.submitted = false;
-              this.toast.success("Please verify number");
+              this.toast.success("Profile updated");
+              localStorage.setItem("user", JSON.stringify(this.registerFormStep1.value))
+            }
+            if(e.status===409){
+              this.submitted=false
+              this.toast.warning("Duplicate Email")
             }
           });
         this.currentStep = 1;
         this.submitted = false;
-      }
+      
+      
     } catch (error: any) {
+      this.toast.warning("Profile update failed");
       console.log(error);
       this.toast.error(error.message);
     }
   }
+  
 }

@@ -50,4 +50,18 @@ export class CommonService {
     return this.http.get(API_URL).pipe(catchError(this.error));
   }
 
+  updateComplaintStatus(complaintId: number, newStatus: string): Observable<any> {
+    return this.http.put(`${this.baseUrl}/api/complain/updateStatus/${complaintId}/${newStatus}`, {});
+  }
+
+  updateProfile(userId: string, data: any): Observable<any> {
+    console.log(userId, data)
+    return this.http.put(`${this.baseUrl}/update-profile/${userId}`, data).pipe(
+      catchError((error) => {
+         
+        return throwError(error);
+      })
+    );
+  }
+  
 }
