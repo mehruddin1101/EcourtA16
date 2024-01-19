@@ -1,7 +1,7 @@
 <div class="container flex-wrap mt-5">
   <div class="">
     <form [formGroup]="packageForm" class="table-header d-flex align-items-center flex-wrap">
-      <p-dropdown formControlName="selectedPackage" [options]="packageDescriptions" optionLabel="pacakeName"
+      <p-dropdown formControlName="selectedPackage" [options]="packageDescriptions" optionLabel="packageName"
         placeholder="Select a Package" (onChange)="packageSelected()">
       </p-dropdown>
       <div class="table-header d-flex align-items-center flex-wrap">
@@ -16,7 +16,31 @@
   </div>
   <div class="package-description">
     <h3>Package Description</h3>
-    <p>{{ currentPackageDescription }}</p>
+    <div class="" *ngIf="currentPackageDescription">
+      <p>{{ currentPackageDescription?.packageDes }}</p>
+
+      <div class="container mt-4">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td class="font-weight-bold">Limit</td>
+              <td>{{ currentPackageDescription?.limit }}</td>
+            </tr>
+            <tr>
+              <td class="font-weight-bold">Capacity</td>
+              <td>{{ currentPackageDescription?.capacity }}</td>
+            </tr>
+            <tr>
+              <td class="font-weight-bold">Amount</td>
+              <td>{{ currentPackageDescription?.amount }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+
   </div>
 </div>
 
@@ -35,8 +59,7 @@
   </form>
   <div class="package-description">
     <div class="pay-button">
-      <p-button label="Pay" class="p-button-primary " (click)="pay()"
-        styleClass="w-18rem mx-auto me-2"></p-button>
+      <p-button label="Pay" class="p-button-primary " (click)="pay()" styleClass="w-18rem mx-auto me-2"></p-button>
     </div>
   </div>
 </div>

@@ -63,5 +63,41 @@ export class CommonService {
       })
     );
   }
-  
+
+  getCountries(): Observable<any> {
+    const API_URL = `${this.baseUrl}/api/countries/all`;
+    return this.http.get(API_URL).pipe(catchError(this.error));
+  }
+  getStates(): Observable<any> {
+    const API_URL = `${this.baseUrl}/api/states/all`;
+    return this.http.get(API_URL).pipe(catchError(this.error));
+  }
+  getDistrict(): Observable<any> {
+    const API_URL = `${this.baseUrl}/api/district/all`;
+    return this.http.get(API_URL).pipe(catchError(this.error));
+  }
+  getCities(): Observable<any> {
+    const API_URL = `${this.baseUrl}/api/cities/all`;
+    return this.http.get(API_URL).pipe(catchError(this.error));
+  }
+  categoryOption(): Observable<any> {
+    const API_URL = `${this.baseUrl}/api/categoryOptions/all`;
+    return this.http.get(API_URL).pipe(catchError(this.error));
+  }
+
+  getPackagesOptions(): Observable<any> {
+    const API_URL = `${this.baseUrl}/api/package/allpackages`;
+    return this.http.get(API_URL).pipe(catchError(this.error));
+  }
+  getSelectedPackagesOptions(data:any): Observable<any> {
+    const API_URL = `${this.baseUrl}/api/package/selected`;
+    return this.http.get(API_URL).pipe(catchError(this.error));
+  }
+  placePackageOrder(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/package-buy/`, data).pipe(
+      catchError((error) => {
+        return throwError(error);
+      })
+    );
+  }
 }
