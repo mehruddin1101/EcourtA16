@@ -40,7 +40,7 @@ export class CommonService {
     const API_URL = `${this.baseUrl}/api/complain/saveComplain`;
     return this.http.post(API_URL, data).pipe(catchError(this.error));
   }
-  getComplain(id:any): Observable<any> {
+  getComplain(id: any): Observable<any> {
     const API_URL = `${this.baseUrl}/api/complain/${id}`;
     return this.http.get(API_URL).pipe(catchError(this.error));
   }
@@ -58,7 +58,7 @@ export class CommonService {
     console.log(userId, data)
     return this.http.put(`${this.baseUrl}/update-profile/${userId}`, data).pipe(
       catchError((error) => {
-         
+
         return throwError(error);
       })
     );
@@ -89,7 +89,7 @@ export class CommonService {
     const API_URL = `${this.baseUrl}/api/package/allpackages`;
     return this.http.get(API_URL).pipe(catchError(this.error));
   }
-  getSelectedPackagesOptions(data:any): Observable<any> {
+  getSelectedPackagesOptions(data: any): Observable<any> {
     const API_URL = `${this.baseUrl}/api/package/selected`;
     return this.http.get(API_URL).pipe(catchError(this.error));
   }
