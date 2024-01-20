@@ -47,8 +47,9 @@ export class LoginScreenComponent implements OnInit {
         (response) => {
           console.log(response)
          
-          const token = response.token;
-          localStorage.setItem('token', token);
+          const authtoken = response.token;
+          // localStorage.setItem('token', token);
+          this.token.setToken(authtoken)
           localStorage.setItem("user", JSON.stringify(response.user))
 
           

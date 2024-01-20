@@ -29,13 +29,13 @@ export class JwtService {
   }
 
   setToken(token: string) {
-    this.authenticationSubject.next(true);
-    return localStorage.setItem("token", token);
+    localStorage.setItem("token", token);
+    return this.authenticationSubject.next(true);
   }
 
   removeToken() {
-    this.authenticationSubject.next(false);
-    return localStorage.removeItem("token");
+    localStorage.removeItem("token");
+    return this.authenticationSubject.next(false);
   }
 
   getAuthenticationStatus() {
