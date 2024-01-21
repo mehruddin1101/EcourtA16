@@ -59,7 +59,9 @@ export class NavbarComponent implements OnDestroy {
           { label: 'Transactions', icon: 'pi pi-fw pi-list', routerLink: 'transactions' },
           { label: 'Case History', icon: 'pi pi-fw pi-chart-bar', routerLink: 'case-history' },
           { label: 'Complaints', icon: 'pi pi-fw pi-list', routerLink: 'customer-complaints' },
-          { label: 'Logout', icon: 'pi pi-fw pi-sign-out', command: () => this.logOut() },
+          {
+            label: this.userDetail.sub, icon: 'pi pi-fw pi-user', style: 'font-weight: bold;',
+          }, { label: 'Logout', icon: 'pi pi-fw pi-sign-out', command: () => this.logOut() },
         ];
       }
     }
