@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { CommonService } from 'src/services/common.service';
+import { JwtService } from 'src/services/jwt.service';
 
 @Component({
   selector: 'app-transactions-screen',
@@ -23,7 +26,7 @@ export class TransactionsScreenComponent {
   statusOptions: any[];
   selectedStatus: any;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private common: CommonService, private token: JwtService, private toast: ToastrService) {
     this.statusOptions = [
       { label: 'Pending', value: 'Pending' },
       { label: 'Received', value: 'Received' },
@@ -68,6 +71,12 @@ export class TransactionsScreenComponent {
     this.transactions.forEach(
       (transactions) => (transactions.date = new Date(<Date>transactions.date))
     );
-
+    let userData = this.token.decodeJwtToken()
+    this.common.getUserTransactions(userData).subscribe((res) => {
+      // this.transactions=res
+    }, (err) => {
+      console.log(err)
+      this.toast.error(err.message)
+    })
   }
 }

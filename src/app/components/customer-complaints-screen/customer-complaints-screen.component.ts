@@ -95,6 +95,7 @@ export class CustomerComplaintsScreenComponent {
   
 
     getComplaintById(id: any): void {
+      debugger
       this.commonService.getComplain(id).subscribe((res) => {
         this.complains = res.complainList; 
         console.log("complaints=", this.complains);

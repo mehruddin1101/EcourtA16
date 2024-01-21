@@ -1,16 +1,14 @@
 <div class="card">
-      <p-table #dt [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm" [value]="complains"
-        [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading" [paginator]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-        [globalFilterFields]="[
-      'cnrNumber',
-      'caseNumber',
-      'partyName',
-      'validateAndApprove'
-    ]">
+    <p-table #dt [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm"
+    [value]="complains" [loading]="loading" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rows]="10" [rowsPerPageOptions]="[10, 25, 50]"
+    (onLazyLoad)="loadComplaintsLazy()"
+    [globalFilterFields]="['complainNumber', 'customerId', 'customerName', 'email']">
+
         <ng-template pTemplate="caption">
             <div class="table-header d-flex align-items-center flex-wrap">
-                <span class="me-2">Complain Page</span>
+                <span class="me-2">Complains Page</span>
                 <!-- <span class="p-input-icon-left me-2">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" placeholder="Complain number" class="p-inputtext" />
@@ -89,11 +87,11 @@
                 </td>
                 <td>
                     <span class="p-column-title">Complain Number</span>
-                    {{ complains.complainNumber }}
+                    {{ complains?.complainNumber }}
                 </td>
                 <td>
                     <span class="p-column-title">Customer Name</span>
-                    {{ complains.customerName }}
+                    {{ complains?.customerName }}
                 </td>
                 <td>
                     <span class="p-column-title" style="cursor: pointer;">Customer Email</span>
@@ -101,15 +99,15 @@
                 </td>
                 <td>
                     <span class="p-column-title">Complain Topic</span>
-                    {{ complains.topic }}
+                    {{ complains?.topic }}
                 </td>
                 <td>
                     <span class="p-column-title">Message</span>
-                    {{ complains.message }}
+                    {{ complains?.message }}
                 </td>
                 <td>
                     <span class="p-column-title">Complain Date</span>
-                    {{ complains.date | date : "MM/dd/yyyy" }}
+                    {{ complains?.date | date : "MM/dd/yyyy" }}
                 </td>
                 <td>
                     <span class="p-column-title">Status</span>

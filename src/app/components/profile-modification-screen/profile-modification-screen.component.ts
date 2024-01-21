@@ -64,7 +64,7 @@ export class ProfileModificationScreenComponent implements OnInit {
       city: [null, Validators.required],
       address: ["", Validators.required],
       email: [
-      
+        { value: "", disabled: true },
        [Validators.required, Validators.email]],
       mobileNumber: [
         { value: "", disabled: true },

@@ -105,7 +105,7 @@
                                 <span class="p-inputgroup-addon">
                                     <i class="pi pi-envelope"></i>
                                 </span>
-                                <input pInputText type="email" class="p-inputtext" formControlName="email"   />
+                                <input pInputText type="email" class="p-inputtext" formControlName="email"  [disabled]="true"  />
                             </div>
                             <small
                                 *ngIf="registerFormStep1.get('email').hasError('required') && (registerFormStep1.get('email').touched || submitted)"

@@ -94,10 +94,42 @@ export class CommonService {
     return this.http.get(API_URL).pipe(catchError(this.error));
   }
   placePackageOrder(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/package-buy/`, data).pipe(
+    return this.http.post(`${this.baseUrl}/api/package-buy/`, data).pipe(
       catchError((error) => {
         return throwError(error);
       })
     );
   }
+
+  /***********MOBILE MAINATANENCE************* */
+  getPackageMobile(): Observable<any> {
+    const API_URL = `${this.baseUrl}/api/mobilemaintenances`;
+    return this.http.get(API_URL).pipe(catchError(this.error));
+  }
+  addPackageMobile(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/api/mobilemaintenances`, data).pipe(
+      catchError((error) => {
+        return throwError(error);
+      })
+    );
+  }
+  deletePackageMobile(id: any): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/api/mobilemaintenances/${id}`).pipe(
+      catchError((error) => {
+        return throwError(error);
+      })
+    );
+  }
+  /***************************************** */
+
+  /***********TRANSACTION MAINATANENCE************* */
+  getUserTransactions(data: any): Observable<any> {
+    const API_URL = `${this.baseUrl}/api/transactions`;
+    return this.http.get(API_URL).pipe(catchError(this.error));
+  }
+  /***************************************** */
 }
+
+
+
+
