@@ -24,7 +24,7 @@ export class ComplaintsScreenComponent implements OnInit {
     private fb: FormBuilder,
     private commonService: CommonService,
     private toast: ToastrService
-  ) { }
+  ) { } 
 
   ngOnInit() {
     this.loadComplaintsLazy();
