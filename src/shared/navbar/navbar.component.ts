@@ -52,7 +52,7 @@ export class NavbarComponent implements OnDestroy {
       } else if (userRoles[0].authority.includes('USER')) {
         this.items = [
           { label: 'Ecourt App', icon: 'pi pi-fw pi-home' },
-          { label: 'Profile Modify', icon: 'pi pi-fw pi-pencil', routerLink: 'profile-modify' },
+          // { label: 'Profile Modify', icon: 'pi pi-fw pi-pencil', routerLink: 'profile-modify' },
           { label: 'Case Page', icon: 'pi pi-fw pi-list', routerLink: 'case-page' },
           { label: 'Mobile Maintenance', icon: 'pi pi-fw pi-cog', routerLink: 'mobile-management' },
           { label: 'Package Selection', icon: 'pi pi-fw pi-shopping-cart', routerLink: 'package-selection' },
@@ -60,7 +60,7 @@ export class NavbarComponent implements OnDestroy {
           { label: 'Case History', icon: 'pi pi-fw pi-chart-bar', routerLink: 'case-history' },
           { label: 'Complaints', icon: 'pi pi-fw pi-list', routerLink: 'customer-complaints' },
           {
-            label: this.userDetail.sub, icon: 'pi pi-fw pi-user', style: 'font-weight: bold;',
+            label: this.userDetail.sub, icon: 'pi pi-fw pi-user', style: 'font-weight: bold;', routerLink: 'profile-modify'
           }, { label: 'Logout', icon: 'pi pi-fw pi-sign-out', command: () => this.logOut() },
         ];
       }
