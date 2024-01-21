@@ -74,15 +74,15 @@ export class PackageSelectionScreenComponent implements OnInit {
     this.initForm();
     this.loadStripe();
 
-    // this.commonService.getPackagesOptions().subscribe(
-    //   (data) => {
-    //     this.packageDescriptions = data
-    //   },
-    //   (error: any) => {
-    //     this.toast.error(error.message)
-    //     console.error('Error:', error);
-    //   }
-    // );
+    this.commonService.getPackagesOptions().subscribe(
+      (data) => {
+        this.packageDescriptions = data
+      },
+      (error: any) => {
+        this.toast.error(error.message)
+        console.error('Error:', error);
+      }
+    );
   }
 
   private initForm() {
@@ -117,21 +117,24 @@ export class PackageSelectionScreenComponent implements OnInit {
   pay() {
     if (this.paymentForm.valid) {
       debugger
+
+
       if (this.paymentForm.value.selectedOption === '2') {
         this.razorpayNow()
       } else if (this.paymentForm.value.selectedOption === '1') {
         this.stripePay(100)
       }
-    }else{
+    } else {
       this.toast.warning("select payment option")
     }
   }
   razorpayNow() {
+    let userdata = this.token.decodeJwtToken()
     const RozarpayOptions = {
-      packageDes: 'Sample Razorpay demo',
+      packageDes: this.currentPackageDescription.packageDes,
       currency: 'INR',
-      amount: 100000,
-      name: 'Sai',
+      amount: this.currentPackageDescription.amount * 100,
+      name: userdata.sub,
       key: environment.razorKey,
       image: 'https://i.imgur.com/FApqk3D.jpeg',
       prefill: {
@@ -144,69 +147,119 @@ export class PackageSelectionScreenComponent implements OnInit {
       },
       modal: {
         ondismiss: () => {
+          debugger
           console.log('dismissed')
         }
       }
     }
 
     const successCallback = (paymentid: any) => {
+      debugger
       console.log(paymentid);
-      let obj = {}
+      let obj: any = {}
+      obj.packageId = this.paymentForm.value.selectedOption
+      obj.userId = userdata.userId
+      obj.total = this.currentPackageDescription.amount
+      obj.subtotal = this.currentPackageDescription.amount
+      obj.tax = 0;
+      obj.transactionId = paymentid,
+        obj.transactionStatus = "paid"
+      obj.statusId = 1    //STATUS ID CHANGE
+      obj.paymentPlatformId = 2
+      obj.transactionObj = ""
+      obj.errorMessage = ""
+      obj.paymentMethod = ""
       this.commonService.placePackageOrder(obj).subscribe((data: any) => {
         console.log(data.data);
+        this.router.navigate(["/mobile-management"])
       },
         (error: any) => {
           this.toast.error(error.message)
           console.error('Error:', error);
         })
 
-      this.router.navigate(["/mobile-management"])
 
     }
 
     const failureCallback = (e: any) => {
-      let obj = {}
+      debugger
+      let obj: any = {}
+      obj.packageId = this.paymentForm.value.selectedOption
+      obj.userId = userdata.userId
+      obj.total = this.currentPackageDescription.amount
+      obj.subtotal = this.currentPackageDescription.amount
+      obj.tax = 0;
+      obj.transactionId = "",
+        obj.transactionStatus = "failure"
+      obj.statusId = 2
+      obj.paymentPlatformId = 2
+      obj.transactionObj = JSON.stringify(e)
+      obj.errorMessage = e.message
+      obj.paymentMethod = ""
       this.commonService.placePackageOrder(obj).subscribe((data: any) => {
         console.log(data.data);
+        this.router.navigate(["/transactions"])
       },
         (error: any) => {
           this.toast.error(error.message)
           console.error('Error:', error);
         })
-      this.router.navigate(["/transactions"])
       console.log(e);
     }
 
-    Razorpay.open(RozarpayOptions, successCallback, failureCallback)
+    try {
+      Razorpay.open(RozarpayOptions, successCallback, failureCallback);
+    } catch (error) {
+      debugger
+      console.error('Razorpay error:', error);
+    }
   }
   handler: any = null;
 
   currency: string = 'INR'
 
   stripePay(amount: any) {
+    let userdata = this.token.decodeJwtToken()
+
     var handler = (<any>window).StripeCheckout.configure({
       key: environment.stripeKey,
       locale: 'auto',
+
       token: (token: any) => {
+        debugger
         console.log('Token Created', token);
         var res = JSON.stringify(token)
-        var obj: any = {};
-        obj.response = res
+        let obj: any = {}
+        obj.packageId = this.paymentForm.value.selectedOption
+        obj.userId = userdata.userId
+        obj.total = this.currentPackageDescription.amount
+        obj.subtotal = this.currentPackageDescription.amount
+        obj.tax = 0;
+        obj.transactionId = token.id,
+          obj.transactionStatus = "paid"
+        obj.statusId = 1    //STATUS ID CHANGE
+        obj.paymentPlatformId = 2
+        obj.transactionObj = res
+        obj.errorMessage = ""
+        obj.paymentMethod = ""
         this.commonService.placePackageOrder(obj).subscribe((data: any) => {
           console.log(data.data);
+          this.router.navigate(["/mobile-management"])
         },
           (error: any) => {
             this.toast.error(error.message)
             console.error('Error:', error);
           })
 
+
+
       },
     });
 
     handler.open({
       name: 'Stripe Payment Gateway',
-      description: '',
-      amount: amount.toFixed(2) * 100,
+      description: this.currentPackageDescription.packageDes,
+      amount: this.currentPackageDescription.amount.toFixed(2) * 100,
       currency: this.currency
     });
   }
